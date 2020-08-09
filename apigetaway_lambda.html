@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+function myFunction() {
+         async function getFace() {
+             let response = await fetch(
+               `https://q61bzdqjw7.execute-api.us-east-2.amazonaws.com/default/test123`,{
+                method: 'POST',
+                body: document.getElementById("base64").value
+             });
+             let result = await response.text();
+             document.getElementById("result").value=result;
+          }
+         getFace();
+         // console.log('RESULT', t)；
+}
+
+function readURL(element) {
+   var file = element.files[0];
+   var reader = new FileReader();
+   reader.onloadend = function() {
+   console.log('RESULT', reader.result)
+   document.getElementById("base64").value= reader.result;
+  }
+  reader.readAsDataURL(file);
+}
+</script>
+
+<form id="contact-form" action="https://q61bzdqjw7.execute-api.us-east-2.amazonaws.com/default/test123" method =''post'>
+  <h4>1. Choose image</h4>
+   <input type="file" onchange="readURL(this)" />
+   <h4>2. Get base64</h4>
+  <input type="text" style="height:35px;" id = "base64" name="base64" class="form-control"/><br/>
+  <h4>3. Invoke lambda aws and get facial attributes</h4>
+  <button id ="api_call" type="button" onclick="myFunction()">Get facial attributes</button> 
+  <h4>Facial attributes</h4>
+  <input type="text" id = "result" style="height:35px;" placeholder="0" class="form-control"/><br/>
+  <h4>Or do it throught a form</h4>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</body>
+</html>
